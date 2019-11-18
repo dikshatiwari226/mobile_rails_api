@@ -1,0 +1,72 @@
+<%= form_with(model: applied_job, local: true) do |form| %>
+  <% if applied_job.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(applied_job.errors.count, "error") %> prohibited this applied_job from being saved:</h2>
+
+      <ul>
+      <% applied_job.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="container">
+    <div class="row form-horizontal">
+
+        <div class="form-group">
+          <label class="col-md-2 col-form-label"><%= form.label :position %></label>
+          <div class="col-md-10">
+            <%= form.number_field :position , :class => "form-control", :required=> true %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 col-form-label"><%= form.label :company %></label>
+          <div class="col-md-10">
+            <%= form.text_field :company , :class => "form-control", :required=> true %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 col-form-label"> <%= form.label :application_no %></label>
+          <div class="col-md-10">
+            <%= form.text_field :application_no , :class => "form-control", :required=> true %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 col-form-label">  <%= form.label :date_applied %></label>
+          <div class="col-md-10">
+            <%= form.text_field :date_applied , :class => "form-control myDatePicker", :required=> true,autocomplete: :off %>
+          </div>
+        </div>
+
+        <div  class="form-group">
+          <label class="col-md-2 col-form-label">  <%= form.label :application_status %></label>
+           <div class="col-md-10">
+            <%= form.select :application_status, AppliedJob::APP_STATUS.invert, {prompt: 'Select'}, autofocus: true, autocomplete: "application_status",  class: 'form-control',:required => true,value: @applied_job.application_status_display    %>
+            </div>
+        </div>
+        
+        <div class="field">
+          <%= form.label :resume_submit %>
+          <%= form.check_box :resume_submit %>
+        </div>
+
+        <div class="text-center">
+         <%= form.submit :class => "btn btn--blue btn--stroke btn--stroke--2 px24 py12 txt-s round-full px36"  %>
+        </div>
+
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      $('.myDatePicker').datepicker({
+        format: 'yyyy/mm/dd',
+        autoclose: true
+      });
+    });
+</script>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @applied_job.position %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @applied_job.company %>
+</p>
+
+<p>
+  <strong>Application no:</strong>
+  <%= @applied_job.application_no %>
+</p>
+
+<p>
+  <strong>Date applied:</strong>
+  <%= @applied_job.date_applied.strftime('%d %b %Y') %>
+</p>
+
+<p>
+  <strong>Application status:</strong>
+  <%= @applied_job.application_status %>
+</p>
+
+<p>
+  <strong>Resume submit:</strong>
+  <%= @applied_job.resume_submit %>
+</p>
+
+<%= link_to 'Edit', edit_applied_job_path(@applied_job), :class => "btn btn--blue btn--stroke btn--stroke--2 px24 py12 txt-s round-full px36" %> |
+<%= link_to 'Back', applied_jobs_path, :class => "btn btn--blue btn--stroke btn--stroke--2 px24 py12 txt-s round-full px36" %>

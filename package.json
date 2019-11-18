@@ -1,0 +1,7 @@
+{
+  "name": "Mobile_rails_api",
+  "private": true,
+  "dependencies": {
+    "react-router-dom": "^5.1.2"
+  }
+}
