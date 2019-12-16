@@ -1,13 +1,5 @@
 class Api::V1::ApiController < ApplicationController
 
-	def create
-		
-	end
-
-	def destroy
-		
-	end
-
  	respond_to :json
  	helper_method :current_user
  	def getting_started

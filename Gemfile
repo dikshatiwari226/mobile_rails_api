@@ -64,12 +64,17 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'apipie-rails'
-# for api cors
+#===== for api cors ===============  
 gem 'rack-cors', require: 'rack/cors'
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'sassc-rails', '>= 2.1.0'
 
 gem 'jquery-rails'
-
+# ======= for datepicker =======
 gem 'bootstrap-datepicker-rails'
+# ====== for Search Bar ========
+gem 'webpacker'
+gem 'haml'
+gem 'ransack'
+
 

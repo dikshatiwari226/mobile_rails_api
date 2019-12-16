@@ -1,10 +1,15 @@
-class AppliedJobsController < ApplicationController
+class Api::V1::AppliedJobsController < Api::V1::ApiController
   before_action :set_applied_job, only: [:show, :edit, :update, :destroy]
 
   # GET /applied_jobs
   # GET /applied_jobs.json
   def index
     @applied_jobs = AppliedJob.all
+    if @applied_jobs.present?
+      return render json: {status: 200, data: {applied_jobs: @applied_jobs}, :message =>"Show all applied_jobs"} 
+    else
+      return render json: {status: 401, data: {user: nil, errors: @applied_jobs.errors}, :message =>" Rollback all applied_jobs"} 
+    end  
   end
 
   # GET /applied_jobs/1
@@ -25,7 +30,6 @@ class AppliedJobsController < ApplicationController
   # POST /applied_jobs.json
   def create
     @applied_job = AppliedJob.new(applied_job_params)
-
     respond_to do |format|
       if @applied_job.save
         format.html { redirect_to @applied_job, notice: 'Applied job was successfully created.' }

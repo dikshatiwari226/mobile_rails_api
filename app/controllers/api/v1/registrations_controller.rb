@@ -1,12 +1,12 @@
  class Api::V1::RegistrationsController < Api::V1::ApiController
-  skip_before_action  :verify_authenticity_token 
-  skip_before_action :authenticate_user!, only: [:create, :resset_password]
+  # skip_before_action  :verify_authenticity_token 
+  # skip_before_action :authenticate_user!, only: [:create, :resset_password]
 
   
 
   def create
     user = User.new(registration_params)
-     if user.save
+    if user.save
       return render json: {status: 200, data: {user: user}, :message =>"Successfully Signup"} 
     else
       warden.custom_failure!
