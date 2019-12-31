@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  resources :businesses
+  post '/edit/:id', to: 'businesses#update'
+  get '/delete/:id', to: 'businesses#destroy'
+  
   # devise_for :users
 
   root "home#index"
+
 
   namespace :api do
     namespace :v1 do
@@ -22,5 +27,7 @@ Rails.application.routes.draw do
       # end
     end
   end
+
+    
   
 end

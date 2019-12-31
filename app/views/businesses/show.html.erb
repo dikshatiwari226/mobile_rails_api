@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Person name:</strong>
+  <%= @business.person_name %>
+</p>
+
+<p>
+  <strong>Business name:</strong>
+  <%= @business.business_name %>
+</p>
+
+<p>
+  <strong>Business gst number:</strong>
+  <%= @business.business_gst_number %>
+</p>
+
+<%= link_to 'Edit', edit_business_path(@business) %> |
+<%= link_to 'Back', businesses_path %>
