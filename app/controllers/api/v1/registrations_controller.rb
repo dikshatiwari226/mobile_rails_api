@@ -44,6 +44,17 @@
     end
   end
   
+  def profile
+    user = current_user
+    render json: user
+  end
+
+  def edit_profile
+    user = current_user
+    user.update( registration_params)
+    render json user
+  end
+
   private
   def registration_params
     params.require(:registration).permit(:name,:email, :password)

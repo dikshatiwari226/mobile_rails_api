@@ -2,12 +2,11 @@
   skip_before_action  :verify_authenticity_token
 
  	def create
-    byebug
     email = params[:email]
     password = params[:password]
     @user_email = params[:email]
     @user_pass = params[:password]
-    @user = User.where(email: email)
+    @user = User.where(email: email).first
     if @user.present?
         # sign_in @user
         return render json: {status: 200, data: {user: @user}, message: "Login Successfully"}

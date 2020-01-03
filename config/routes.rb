@@ -21,7 +21,8 @@ Rails.application.routes.draw do
         delete "user/delete", :to => 'registrations#destroy'
         get "search", :to => 'jobinformations#search'
         # put '/change_password', to: 'registrations#change_password'
-        # get "/profile", :to => 'registrations#profile'
+        get "/profile", :to => 'registrations#profile'
+        post "/edit_profile", :to => 'registrations#edit_profile'
         # get "/reset_password", :to => 'registrations#reset_password'
         # get "/reset_password_link", :to => 'registrations#reset_password_link'
       # end
