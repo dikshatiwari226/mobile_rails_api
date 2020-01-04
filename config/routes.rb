@@ -16,7 +16,7 @@ Rails.application.routes.draw do
         post "/sign_in", :to => 'sessions#create'
         delete "/sign_out", :to => 'sessions#destroy'
         post "/sign_up", :to => 'registrations#create'
-        get "/users", :to => 'registrations#index'
+        post "/users", :to => 'registrations#index'
         put "/update_account", :to => 'registrations#update'
         delete "user/delete", :to => 'registrations#destroy'
         get "search", :to => 'jobinformations#search'

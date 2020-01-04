@@ -51,13 +51,15 @@
 
   def edit_profile
     user = current_user
-    user.update( registration_params)
-    render json user
+    user.update(registration_params)
+    user.dob = params[:registration][:dob]
+    user.save
+    render json: { data: {user: user}, :message =>"User updated Successfully"}
   end
 
   private
   def registration_params
-    params.require(:registration).permit(:name,:email, :password)
+    params.require(:registration).permit(:name,:email, :password, :gender, :contact, :dob, :address, :profession)
   end
 
 end
