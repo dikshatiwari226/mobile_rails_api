@@ -23,6 +23,9 @@
     end  
   end  
 
+  def edit
+  end
+
   def update
     user =  current_user
     if params[:user][:email].present?
@@ -53,13 +56,13 @@
     user = current_user
     user.update(registration_params)
     user.dob = params[:registration][:dob]
-    user.save
-    render json: { data: {user: user}, :message =>"User updated Successfully"}
+    user.save!
+    render json: { data: {user: user}, :message =>"Profile updated Successfully"}
   end
 
   private
   def registration_params
-    params.require(:registration).permit(:name,:email, :password, :gender, :contact, :dob, :address, :profession)
+    params.require(:registration).permit(:name,:email, :password, :gender, :contact, :dob, :address, :profession, :image)
   end
 
 end
