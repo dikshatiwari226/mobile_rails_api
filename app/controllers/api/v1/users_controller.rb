@@ -25,9 +25,8 @@ class Api::V1::UsersController < Api::V1::ApiController
 	end
 
 	def update
-		byebug
 		user = User.find(params[:id])
-		if user.update(user_params)
+		if user.update(name: params[:name],email: params[:email],gender: params[:gender],contact: params[:contact],dob: params[:dob],address: params[:address],profession: params[:profession], image: params[:file])
       return render json: {status: 200, data: {user: user}, :message =>"User Successfully Updated"} 
     end
 	end

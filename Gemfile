@@ -77,4 +77,5 @@ gem 'webpacker'
 gem 'haml'
 gem 'ransack'
 
-
+# ===== Image upload ===
+gem 'carrierwave'
