@@ -28,40 +28,31 @@ class BusinessesController < ApplicationController
   # POST /businesses.json
   def create
     @business = Business.new(business_params)
-      @business.save
-        render json: @business
-    # respond_to do |format|
-    #   if @business.save
-    #     render json: @business
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @business.errors, status: :unprocessable_entity }
-    #   end
-    # end
+      if @business.save
+        render json: { status: 200,  data: {business: @business} , message: "Business created" }
+      else
+        render json: { status: 401,  errors: @business.errors.full_messages }
+      end
   end
 
   # PATCH/PUT /businesses/1
   # PATCH/PUT /businesses/1.json
   def update
-    respond_to do |format|
       if @business.update(business_params)
-        format.html { redirect_to @business, notice: 'Business was successfully updated.' }
-        format.json { render :show, status: :ok, location: @business }
+        render json: { status: 200,  data: {business: @business} , message: "Business was successfully updated" }
       else
-        format.html { render :edit }
-        format.json { render json: @business.errors, status: :unprocessable_entity }
+        render json: { status: 401,  errors: @business.errors.full_messages }
       end
-    end
   end
 
   # DELETE /businesses/1
   # DELETE /businesses/1.json
   def destroy
-    @business.destroy
-    respond_to do |format|
-      format.html { redirect_to businesses_url, notice: 'Business was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    if @business.destroy
+        render json: { status: 200,  data: {business: @business} , message: "Business was successfully destroyed." }
+      else
+        render json: { status: 401,  errors: @business.errors.full_messages }
+      end
   end
 
   private

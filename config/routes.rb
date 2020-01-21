@@ -21,12 +21,14 @@ Rails.application.routes.draw do
         get "search", :to => 'jobinformations#search'
         get "/profile", :to => 'registrations#profile'
         post "/edit_profile", :to => 'registrations#edit_profile'
+        post "/current_user_update_image", :to => 'registrations#current_user_update_image'
         post "/users", :to => 'users#index'
         get "/showUser/:id", :to=> 'users#show'
         post "/editUser/:id", :to=> 'users#update'
         get "/delete/:id", :to => 'users#destroy'
         post "/fileupload", :to => 'users#create'
-        # get "/reset_password", :to => 'registrations#reset_password'
+        post "/change_password", :to => 'registrations#change_password'
+        post "/forgot_password", :to => 'registrations#forgot_password'
         # get "/reset_password_link", :to => 'registrations#reset_password_link'
       # end
     end

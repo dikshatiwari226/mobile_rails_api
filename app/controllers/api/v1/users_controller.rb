@@ -28,14 +28,17 @@ class Api::V1::UsersController < Api::V1::ApiController
 		user = User.find(params[:id])
 		if user.update(name: params[:name],email: params[:email],gender: params[:gender],contact: params[:contact],dob: params[:dob],address: params[:address],profession: params[:profession], image: params[:file])
       return render json: {status: 200, data: {user: user}, :message =>"User Successfully Updated"} 
+    else
+       return render json: { status: 401,  errors: user.errors.full_messages }
     end
 	end
 
 	def destroy
     user = User.find(params[:id])
-    user.destroy
     if user.destroy
-      return render json: {status: 200, data: {user: user}, :message =>"User deleted successfully"} 
+      return render json: {status: 200, data: {user: user}, :message =>"User deleted successfully"}
+    else
+      return render json: { status: 401,  errors: user.errors.full_messages }
     end
   end
 

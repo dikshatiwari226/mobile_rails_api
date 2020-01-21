@@ -2,7 +2,9 @@
   # skip_before_action  :verify_authenticity_token 
   # skip_before_action :authenticate_user!, only: [:create, :resset_password]
 
-  
+  def change_password
+    
+  end
 
   def create
     user = User.new(registration_params)
@@ -10,7 +12,7 @@
       return render json: {status: 200, data: {user: user}, :message =>"Successfully Signup"} 
     else
       warden.custom_failure!
-      return render json: {status: 401, data: {user: nil, errors: user.errors}, :message =>"SignUp Rollback"} 
+      return render json: {status: 401,  errors: user.errors.full_messages} 
     end
   end
 
@@ -41,7 +43,6 @@
 
   def destroy
     user = User.find(params[:id])
-    user.destroy
     if user.destroy
       return render json: {status: 200, data: {user: user}, :message =>"User deleted successfully"} 
     end
@@ -52,12 +53,21 @@
     render json: user
   end
 
+  def current_user_update_image
+    user = current_user
+    user.update(image: params[:file])
+    render json: { status: 200, data: {user: user}, :message =>"Image Updated Successfully"}
+  end
+
   def edit_profile
     user = current_user
     user.update(registration_params)
     user.dob = params[:registration][:dob]
-    user.save!
-    render json: { data: {user: user}, :message =>"Profile updated Successfully"}
+    if user.save!
+      render json: { status: 200, data: {user: user}, :message =>"Profile updated Successfully"}
+    else
+      render json: { status: 401,  errors: user.errors.full_messages }
+    end
   end
 
   private
