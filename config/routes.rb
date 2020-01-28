@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   post '/edit/:id', to: 'businesses#update'
   get '/delete/:id', to: 'businesses#destroy'
   
-  # devise_for :users
+  devise_for :users
 
   root "home#index"
 
@@ -27,9 +27,8 @@ Rails.application.routes.draw do
         post "/editUser/:id", :to=> 'users#update'
         get "/delete/:id", :to => 'users#destroy'
         post "/fileupload", :to => 'users#create'
-        post "/change_password", :to => 'registrations#change_password'
-        post "/forgot_password", :to => 'registrations#forgot_password'
-        # get "/reset_password_link", :to => 'registrations#reset_password_link'
+        post "/change_password", :to => 'users#change_password'
+        post "/forgot", :to => 'sessions#forgot'
       # end
     end
   end

@@ -79,3 +79,6 @@ gem 'ransack'
 
 # ===== Image upload ===
 gem 'carrierwave'
+
+# letter opener for email ===
+gem "letter_opener"

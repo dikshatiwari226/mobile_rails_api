@@ -1,22 +1,25 @@
  class Api::V1::SessionsController < Api::V1::ApiController
   skip_before_action  :verify_authenticity_token
 
- 	def create
-    email = params[:email]
-    password = params[:password]
-    @user_email = params[:email]
-    @user_pass = params[:password]
-    @user = User.where(email: email).first
-    if @user.present?
-        # sign_in @user
-        return render json: {status: 200, data: {user: @user}, message: "Login Successfully"}
-    elsif @user_email.blank? && @user_pass.blank?
-        return render json: {status: 401,  message: "The request must contain the email and password"}
-    else
-        return render json: {status: 401, message: "Invalid Username or Password"}
+  def create
+    begin
+      email = params[:email]
+      password = params[:password]
+      return render json: {status: 401, data: {user: nil}, errors: "The request must contain the email and password."} unless email.present? && password.present?
+      @user = User.where(email: email).first
+      return render json: {status: 401, data: {user: nil}, errors: "Must be exist email"} if @user.blank?
+      return render json: {status: 401, data: {user: nil}, errors: "Invalid email or password"} if not @user.valid_password?(password)
+      return render json: {status: 200, data: {user: current_user}, errors: "You have allready Login."} if current_user
+      return render json: {status: 200, data: {user: @user}, message: "Login Successfully"}
+    rescue
+      rescue_section
     end
-  end
+  end 
 
+  def forgot
+    @user = User.where(email: params[:email]).first
+    UserMailer.forgot(@user).deliver_now
+  end
 
   def destroy
     email = params[:email]
@@ -27,7 +30,10 @@
     end
   end
 
-
+  private
+  def rescue_section
+    return render json: {status: 500, data: {review: nil}, message: "Something Went Wrong"}
+  end 
   
 
  end

@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :timeoutable,:registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :name, presence: true, uniqueness: true
 
   before_save :ensure_authentication_token
   

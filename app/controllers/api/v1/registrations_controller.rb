@@ -2,17 +2,13 @@
   # skip_before_action  :verify_authenticity_token 
   # skip_before_action :authenticate_user!, only: [:create, :resset_password]
 
-  def change_password
-    
-  end
-
   def create
     user = User.new(registration_params)
     if user.save
       return render json: {status: 200, data: {user: user}, :message =>"Successfully Signup"} 
     else
       warden.custom_failure!
-      return render json: {status: 401,  errors: user.errors.full_messages} 
+      return render json: {status: 401, data: {user: nil, errors: user.errors.full_messages}}
     end
   end
 
@@ -72,7 +68,7 @@
 
   private
   def registration_params
-    params.require(:registration).permit(:name,:email, :password, :gender, :contact, :dob, :address, :profession, :image)
+    params.require(:registration).permit(:name,:email, :password, :password_confirmation, :gender, :contact, :dob, :address, :profession, :image)
   end
 
 end

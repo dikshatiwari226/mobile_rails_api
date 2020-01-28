@@ -1,4 +1,19 @@
 class Api::V1::UsersController < Api::V1::ApiController
+   skip_before_action  :verify_authenticity_token
+
+  def change_password
+    user = current_user
+    if user.valid_password?(params[:oldPassword])
+       if user.update(password: params[:newPassword],password_confirmation: params[:confirmPassword])
+          return render json: {status: 200,  :message =>"Password updated"}
+        else
+          return render json: {status: 401,  :errors =>" New Password && Confirm Password is not matched"}
+        end
+    else
+      return render json: {status: 401,  :errors =>" Old Password is not valid"} 
+    end
+  end
+
 
 	def create
     user = User.new(user_params)
@@ -44,7 +59,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   private
   def user_params
-    params.require(:user).permit(:name,:email, :password, :gender, :contact, :dob, :address, :profession, :image)
+    params.require(:user).permit(:name,:email, :password, :password_confirmation,:gender, :contact, :dob, :address, :profession, :image)
   end
 
 end 
