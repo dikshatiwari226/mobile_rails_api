@@ -4,8 +4,10 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :null_session
 
 
-  #----- Can't verify CSRF token authenticity. and ActionController::InvalidAuthenticityToken  this error solve this line  ----
+  #----- Can't verify CSRF token authenticity. 
+  # and ActionController::InvalidAuthenticityToken  this error solve this line  ----
   protect_from_forgery unless: -> { request.format.json? }
+
 
   protected
 

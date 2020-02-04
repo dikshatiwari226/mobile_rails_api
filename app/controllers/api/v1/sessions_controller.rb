@@ -16,9 +16,10 @@
     end
   end 
 
-  def forgot
+  def forgot 
     @user = User.where(email: params[:email]).first
     UserMailer.forgot(@user).deliver_now
+    return render json: {status: 200, data: {user: @user}, message: "Please check your mail #{@user.email}"}
   end
 
   def destroy
