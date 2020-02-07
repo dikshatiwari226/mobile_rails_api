@@ -16,11 +16,13 @@
     end
   end 
 
-  def forgot 
+  def forgot
     @user = User.where(email: params[:email]).first
-    UserMailer.forgot(@user).deliver_now
+    User.send_reset_password_instructions({"email"=>@user.email})
     return render json: {status: 200, data: {user: @user}, message: "Please check your mail #{@user.email}"}
   end
+
+
 
   def destroy
     email = params[:email]
@@ -35,6 +37,5 @@
   def rescue_section
     return render json: {status: 500, data: {review: nil}, message: "Something Went Wrong"}
   end 
-  
 
  end
