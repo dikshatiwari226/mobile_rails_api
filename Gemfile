@@ -83,3 +83,6 @@ gem 'carrierwave'
 
 # letter opener for email ===
 gem "letter_opener"
+
+#===== Login with Google ======
+gem "omniauth-google-oauth2"

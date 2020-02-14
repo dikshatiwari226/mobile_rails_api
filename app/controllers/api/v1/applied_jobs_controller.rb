@@ -8,13 +8,15 @@ class Api::V1::AppliedJobsController < Api::V1::ApiController
     if @applied_jobs.present?
       return render json: {status: 200, data: {applied_jobs: @applied_jobs}, :message =>"Show all applied_jobs"} 
     else
-      return render json: {status: 401, data: {user: nil, errors: @applied_jobs.errors}, :message =>" Rollback all applied_jobs"} 
+      return render json: {status: 401, data: {errors: @applied_jobs.errors}, :message =>" Rollback all applied_jobs"} 
     end  
   end
 
   # GET /applied_jobs/1
   # GET /applied_jobs/1.json
   def show
+    @applied_jobs = AppliedJob.find(params[:id])
+    render json: @applied_jobs
   end
 
   # GET /applied_jobs/new
@@ -24,47 +26,42 @@ class Api::V1::AppliedJobsController < Api::V1::ApiController
 
   # GET /applied_jobs/1/edit
   def edit
+    render json: @applied_job
   end
+
+  def update
+    @applied_job = AppliedJob.find(params[:id])
+    if @applied_job.update(position: params[:position], company: params[:company], application_no: params[:application_no], date_applied: params[:date_applied], application_status: params[:application_status],resume: params[:resume])
+      return render json: {status: 200, data: {applied_job: @applied_job}, :message =>"Applied_job Successfully Updated"} 
+    else
+       return render json: { status: 401,  errors: applied_job.errors.full_messages }
+    end
+  end
+
 
   # POST /applied_jobs
   # POST /applied_jobs.json
   def create
-    @applied_job = AppliedJob.new(applied_job_params)
-    respond_to do |format|
-      if @applied_job.save
-        format.html { redirect_to @applied_job, notice: 'Applied job was successfully created.' }
-        format.json { render :show, status: :created, location: @applied_job }
-      else
-        format.html { render :new }
-        format.json { render json: @applied_job.errors, status: :unprocessable_entity }
-      end
+    @applied_job = AppliedJob.new(position: params[:position], company: params[:company], application_no: params[:application_no], date_applied: params[:date_applied], application_status: params[:application_status],resume: params[:resume])
+    if @applied_job.save
+     return render json: { status: 200, data: {applied_job: @applied_job} , message: "Applied job was successfully created." }
+    else
+     return render json: { status: 401,  errors: @applied_job.errors.full_messages }
     end
   end
 
-  # PATCH/PUT /applied_jobs/1
-  # PATCH/PUT /applied_jobs/1.json
-  def update
-    respond_to do |format|
-      if @applied_job.update(applied_job_params)
-        format.html { redirect_to @applied_job, notice: 'Applied job was successfully updated.' }
-        format.json { render :show, status: :ok, location: @applied_job }
-      else
-        format.html { render :edit }
-        format.json { render json: @applied_job.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # DELETE /applied_jobs/1
   # DELETE /applied_jobs/1.json
   def destroy
-    @applied_job.destroy
-    respond_to do |format|
-      format.html { redirect_to applied_jobs_url, notice: 'Applied job was successfully destroyed.' }
-      format.json { head :no_content }
+    @applied_job = AppliedJob.find(params[:id])
+    if @applied_job.destroy
+      return render json: {status: 200, data: {applied_job: @applied_job}, :message =>"Applied job was successfully destroyed."}
+    else
+      return render json: { status: 401,  errors: @applied_job.errors.full_messages }
     end
   end
-
+    
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_applied_job
@@ -73,6 +70,6 @@ class Api::V1::AppliedJobsController < Api::V1::ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def applied_job_params
-      params.require(:applied_job).permit(:position, :company, :application_no, :date_applied, :application_status, :resume_submit)
+      params.require(:applied_job).permit(:position, :company, :application_no, :date_applied, :application_status, :resume)
     end
 end

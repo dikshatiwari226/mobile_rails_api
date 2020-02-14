@@ -6,4 +6,5 @@ class AppliedJob < ApplicationRecord
   	AppliedJob::APP_STATUS[application_status]
   end
 
+  mount_uploader :resume, ImageUploader
 end

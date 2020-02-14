@@ -3,10 +3,11 @@ Rails.application.routes.draw do
   post '/edit/:id', to: 'businesses#update'
   get '/delete/:id', to: 'businesses#destroy'
   
-  devise_for :users
+  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
 
-  root "home#index"
+  # root "home#index"
 
+  # post 'auth/request', to:'businesses#get_authorization'
 
   namespace :api do
     namespace :v1 do
@@ -29,6 +30,8 @@ Rails.application.routes.draw do
         post "/fileupload", :to => 'users#create'
         post "/change_password", :to => 'users#change_password'
         post "/forgot", :to => 'sessions#forgot'
+        # post "auth/google_login", :to => 'sessions#get_authorization'
+        # get "/showAppliedJob/:id", :to => 'applied_jobs#show'
       # end
     end
   end

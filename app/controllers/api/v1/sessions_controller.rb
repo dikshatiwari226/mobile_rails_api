@@ -1,4 +1,4 @@
- class Api::V1::SessionsController < Api::V1::ApiController
+class Api::V1::SessionsController < Api::V1::ApiController
   skip_before_action  :verify_authenticity_token
 
   def create
@@ -22,7 +22,9 @@
     return render json: {status: 200, data: {user: @user}, message: "Please check your mail #{@user.email}"}
   end
 
-
+  def get_authorization
+    
+  end
 
   def destroy
     email = params[:email]
